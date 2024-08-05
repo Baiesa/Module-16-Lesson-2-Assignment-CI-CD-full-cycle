@@ -7,7 +7,9 @@ const CommentForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const comment = { title, body };
-    localStorage.setItem('comments', JSON.stringify(comment));
+    const comments = JSON.parse(localStorage.getItem('comments')) || [];
+    comments.push(comment);
+    localStorage.setItem('comments', JSON.stringify(comments));
     setTitle('');
     setBody('');
   };
@@ -15,16 +17,18 @@ const CommentForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label>Title:</label>
+        <label htmlFor="title">Title:</label>
         <input 
+          id="title"
           type="text" 
           value={title} 
           onChange={(e) => setTitle(e.target.value)} 
         />
       </div>
       <div>
-        <label>Body:</label>
+        <label htmlFor="body">Body:</label>
         <textarea 
+          id="body"
           value={body} 
           onChange={(e) => setBody(e.target.value)} 
         />
